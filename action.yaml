@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2024 Liv Dywan <liv.dywan@suse.com>
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+---
+name: Train a model based on openQA test results
+description: Use test artifacts as a training dataset
+branding:
+  icon: 'check-circle'
+  color: 'blue'
+
+inputs:
+  jobs:
+    description: A list of openQA jobs
+    required: false
+    default: 'pool'
+
+runs:
+  using: docker
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.jobs }}

@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2024 Liv Dywan <liv.dywan@suse.com>
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+name: GitHub Container Registry
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+      contents: read
+      packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and publish Docker image for ARM64 and AMD64 architectures at the same time
+      uses: VaultVulp/gp-docker-action@1.6.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        image-name: min
+        image-platform: linux/arm64,linux/amd64

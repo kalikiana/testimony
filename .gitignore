@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Liv Dywan <liv.dywan@suse.com>
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+dataset
+.h5
+__pycache__

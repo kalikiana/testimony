@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2024 Liv Dywan <liv.dywan@suse.com>
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+name: Unit tests
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - uses: abatilo/actions-poetry@v2
+      - name: Install dependencies
+        run: poetry install
+      - name: Python test cases
+        run: poetry run pytest -v
+      - name: Style checks
+        run: poetry run flake8
+      - name: License compliance
+        run: poetry run reuse lint
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          results: example
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Example test result visualization
+          path: ${{ github.workspace }}
+        if: always()
